@@ -35,8 +35,12 @@ def player_picks(board)
   return player_pick.to_i
 end
 
-def computer_picks(open_spaces)
-  comp_choice = open_spaces.sample
+def computer_picks(board, open_spaces)
+  if block_player_or_win(board, open_spaces)
+    comp_choice = block_player_or_win(board, open_spaces)
+  else
+    comp_choice = open_spaces.sample
+  end
 end
 
 
@@ -52,6 +56,33 @@ def winning(board)
   end
   nil
 end
+
+#computer sees if it can win the game with the next move.
+#if it can't, it will try to stop the player from winning.
+def block_player_or_win(board, open_spaces)
+  WINNING_LINES.each do |box|
+    if board[box[0]] == 'O' && board[box[1]] == 'O' && open_spaces.include?(box[2])
+      return box[2]
+    elsif board[box[0]] == 'O' && board[box[2]] == 'O' && open_spaces.include?(box[1])
+      return box[1]
+    elsif board[box[1]] == 'O' && board[box[2]] == 'O' && open_spaces.include?(box[0])
+      return box[0]
+    end
+  end
+
+  WINNING_LINES.each do |box|
+    if board[box[0]] == 'X' && board[box[1]] == 'X' && open_spaces.include?(box[2])
+      return box[2]
+    elsif board[box[0]] == 'X' && board[box[2]] == 'X' && open_spaces.include?(box[1])
+      return box[1]
+    elsif board[box[1]] == 'X' && board[box[2]] == 'X' && open_spaces.include?(box[0])
+      return box[0]
+    end
+  end
+  nil
+end
+        
+        
       
 
 
@@ -79,12 +110,12 @@ begin
     end
 
     if open_spaces.length == 0 && !outcome
-      puts "Looks like this one is tie!"
-      outcome == true
+      puts "Looks like this one is a tie!"
+      outcome = true
     end
 
     if !outcome
-      picks[computer_picks(open_spaces)] = 'O'
+      picks[computer_picks(picks, open_spaces)] = 'O'
       draw_board(picks)
       outcome = winning(picks)
     end
