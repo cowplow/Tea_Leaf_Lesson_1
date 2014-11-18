@@ -109,13 +109,15 @@ begin
       busted = true
       break
     elsif (hand_value(player_cards) == 21  && natural_21)
+      say "The Dealer reveals their hole card, the #{VALUES[dealer_cards[1][0]][1]} of #{SUITS[dealer_cards[1][1]]}"
       say "Both players have 21, it's a push!"
       busted = true
       break
     elsif natural_21
         say "You lose the Dealer has 21, what a luck sack!" 
     elsif (hand_value(player_cards) == 21 && player_cards.length == 2)
-      say "Congratulations, you got a Black Jack"
+      say "Congratulations, you have a Black Jack"
+      say "The Dealer reveals their hole card, the #{VALUES[dealer_cards[1][0]][1]} of #{SUITS[dealer_cards[1][1]]}"
       natural_21 = true
       break
     elsif hand_value(player_cards) == 21
