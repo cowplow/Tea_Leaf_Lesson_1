@@ -186,8 +186,9 @@ begin
     while comp_value < 17
       say "The Dealer's hand is less than 17, they take another card..."
       dealer_cards << deal_card(deck)
-      sleep 1
+      sleep 2
       say "The Dealer reveals the #{VALUES[dealer_cards[-1][0]][1]} of #{SUITS[dealer_cards[-1][1]]}"
+      sleep 2
       comp_value = hand_value(dealer_cards)
       puts "\n
         *-------------------------------------------------------------*
